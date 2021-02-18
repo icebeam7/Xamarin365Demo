@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin365Demo.Views.Login365View"
+             Title="Login"
+             BackgroundColor="#152F3E">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Start" HorizontalOptions="Center">
+            <StackLayout x:Name="UserArea" />
+
+            <StackLayout IsVisible="{Binding Path=IsSignedOut, Source={x:Static Application.Current}}">
+                <Label Text="Start here"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource title}" />
+                
+                <Button Text="Log In"
+                        Clicked="OnSignIn"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource mainButton}"/>
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding Path=IsSignedIn, Source={x:Static Application.Current}}"
+                         Spacing="20"
+                         Margin="20">
+                <Image Source="{Binding Path=UserPhoto, Source={x:Static Application.Current}}"
+                       HorizontalOptions="Center"/>
+
+                <Label Text="{Binding Path=UserName, Source={x:Static Application.Current}, StringFormat='Welcome, {0}'}"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource subtitle}"
+                       FontSize="Medium"/>
+                <Label Text="{Binding Path=UserEmail, Source={x:Static Application.Current}}"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource subtitle}"/>
+                <Button Text="Logout"
+                        Clicked="OnSignOut"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource mainButton}"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

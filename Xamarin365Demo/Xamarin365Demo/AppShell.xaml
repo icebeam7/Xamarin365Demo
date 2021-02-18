@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="Xamarin365Demo.AppShell"
+       xmlns:views="clr-namespace:Xamarin365Demo.Views"
+       BackgroundColor="#152F3E" 
+       FlyoutBackgroundColor="#445D6E">
+    <FlyoutItem Title="Login" Icon="login.png">
+        <Tab>
+            <ShellContent>
+                <views:Login365View/>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Students" Icon="student.png">
+        <Tab>
+            <ShellContent>
+                <views:StudentListView/>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Reviews" Icon="star_selected.png">
+        <Tab>
+            <ShellContent>
+                <views:ReviewsView/>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+</Shell>

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin365Demo.Views.ReviewsView"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:vm="clr-namespace:Xamarin365Demo.ViewModels"
+             xmlns:converters="clr-namespace:Xamarin365Demo.Converters"
+             ios:Page.UseSafeArea="True"
+             Title="Reviews"
+             BackgroundColor="#152F3E">
+
+    <ContentPage.Resources>
+        <converters:SentimentColorConverter x:Key="SentimentColorConverter"/>
+        <converters:RatingConverter x:Key="RatingConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <vm:ReviewsViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Padding="5" Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <CollectionView Grid.Row="0"
+                                ItemsSource="{Binding Reviews}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="130"/>
+                                </Grid.RowDefinitions>
+                                <Frame HasShadow="True"
+                                       Padding="5">
+                                    <Grid BackgroundColor="#EEEEEE" 
+                                          WidthRequest="400"
+                                          Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="0"
+                                               Grid.ColumnSpan="2"
+                                               Text="{Binding Text}"
+                                               FontAttributes="Italic"
+                                               FontSize="Default"
+                                               TextColor="DarkViolet"/>
+
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="0"
+                                               Text="{Binding Customer, StringFormat='Review by {0}'}"
+                                               FontSize="Small"
+                                               TextColor="Black"/>
+
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="1"
+                                               Text="{Binding Language, StringFormat='Language: {0}'}"
+                                               FontSize="Small"
+                                               TextColor="DarkGreen"
+                                               HorizontalOptions="EndAndExpand"/>
+
+                                        <StackLayout Grid.Row="2"
+                                                     Grid.Column="0"
+                                                     Orientation="Horizontal">
+                                            <Image Source="{Binding Rating, Converter={StaticResource RatingConverter}, ConverterParameter=1}" 
+                                                   WidthRequest="24" 
+                                                   HeightRequest="24"/>
+                                            <Image Source="{Binding Rating, Converter={StaticResource RatingConverter}, ConverterParameter=2}" 
+                                                   WidthRequest="24" 
+                                                   HeightRequest="24"/>
+                                            <Image Source="{Binding Rating, Converter={StaticResource RatingConverter}, ConverterParameter=3}" 
+                                                   WidthRequest="24" 
+                                                   HeightRequest="24"/>
+                                            <Image Source="{Binding Rating, Converter={StaticResource RatingConverter}, ConverterParameter=4}" 
+                                                   WidthRequest="24" 
+                                                   HeightRequest="24"/>
+                                            <Image Source="{Binding Rating, Converter={StaticResource RatingConverter}, ConverterParameter=5}" 
+                                                   WidthRequest="24" 
+                                                   HeightRequest="24"/>
+                                        </StackLayout>
+
+                                        <Label Grid.Row="2" 
+                                               Grid.Column="1"
+                                               Text="{Binding SentimentScore, StringFormat='Analyzed Score: {0:N2} %'}"
+                                               FontAttributes="Bold"
+                                               FontSize="Small"
+                                               TextColor="{Binding SentimentScore, Converter={StaticResource SentimentColorConverter}}"
+                                               VerticalTextAlignment="Center"/>
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <ActivityIndicator Grid.Row="1" 
+                               Color="#FFA700"
+                               IsRunning="{Binding IsBusy}"/>
+
+                <Button Grid.Row="2" 
+                        Style="{StaticResource mainButton}" 
+                        WidthRequest="300" 
+                        Text="Analyze product reviews" 
+                        Command="{Binding AnalyzeCommand}"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

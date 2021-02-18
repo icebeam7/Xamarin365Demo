@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin365Demo.Views.StudentListView"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:vm="clr-namespace:Xamarin365Demo.ViewModels"
+             ios:Page.UseSafeArea="True"
+             Title="Student List"
+             BackgroundColor="#152F3E">
+
+    <ContentPage.BindingContext>
+        <vm:StudentListViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Padding="5" Margin="5" Spacing="5">
+            <CollectionView ItemsSource="{Binding Students}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5" Margin="5" Spacing="5">
+                            <Label Text="{Binding Name}" Style="{StaticResource title}"/>
+                            <Label Text="{Binding Faculty}" Style="{StaticResource subtitle}"/>
+                            <Label Text="{Binding Code}" Style="{StaticResource subtitle}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Export and Upload" 
+                    Command="{Binding ExcelExportCommand}"
+                    Style="{StaticResource mainButton}"/>
+
+            <ActivityIndicator Grid.Row="1" 
+                               Color="#FFA700"
+                               IsRunning="{Binding IsBusy}"/>
+
+            <Label Text="*** File info ***" 
+                   Style="{StaticResource mainLabel}"
+                   FontSize="Medium"/>
+
+            <Label Text="{Binding OneDriveFile.Name, StringFormat='Name: {0}'}" 
+                   Style="{StaticResource subtitle}"/>
+            <Label Text="{Binding OneDriveFile.Id, StringFormat='Id: {0}'}"
+                   Style="{StaticResource subtitle}"/>
+            <Label Text="{Binding OneDriveFile.CreatedDateTime, StringFormat='Date: {0}'}"
+                   Style="{StaticResource subtitle}"/>
+            <Label Text="{Binding OneDriveFile.WebUrl, StringFormat='URL: {0}'}"
+                   Style="{StaticResource subtitle}"/>
+            <Label Text="{Binding OneDriveFile.Size, StringFormat='Size: {0} bytes'}"
+                   Style="{StaticResource subtitle}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
